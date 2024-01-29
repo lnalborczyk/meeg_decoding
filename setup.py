@@ -65,13 +65,13 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url="https://github.com/pypa/sampleproject",  # Optional
+    url="https://github.com/lnalborczyk/meg_decoding_tools",  # Optional
     # This should be your name or the name of the organization which owns the
     # project.
-    author="A. Random Developer",  # Optional
+    author="Ladislas Nalborczyk",  # Optional
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email="author@example.com",  # Optional
+    author_email="ladislas.nalborczyk@gmail.com",  # Optional
     # Classifiers help users find your project by categorizing it.
     #
     # For a list of valid classifiers, see https://pypi.org/classifiers/
