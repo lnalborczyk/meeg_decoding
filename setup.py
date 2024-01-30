@@ -21,8 +21,10 @@ setup(
     keywords="eeg, meg, mne, decoding",
     # When your source code is in a subdirectory under the project root, e.g.
     # `src/`, it is necessary to specify the `package_dir` argument.
-    package_dir={"": "src/"},
     packages=find_packages(where="src/"),
+    package_dir={"": "src"},
+    # package_dir = "src",
+    # packages=find_packages(),
     # packages=['jr', 'jr.tests',
     #     'jr.cloud', 'jr.cloud.tests',
     #     'jr.gat', 'jr.gat.tests',
