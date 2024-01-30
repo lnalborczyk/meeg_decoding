@@ -19,11 +19,11 @@ setup(
         "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python :: 3"
     ],
-    keywords="eeg, meg, mne, decoding",
+    # keywords="eeg, meg, mne, decoding",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     python_requires=">=3.9",
-    install_requires=["mne"],
+    # nstall_requires=["mne"],
     project_urls={
         "Bug Reports": "https://github.com/lnalborczyk/meg_decoding_tools/issues",
         "Source": "https://github.com/lnalborczyk/meg_decoding_tools/"
