@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import time
 from tqdm import tqdm
 import os
@@ -191,13 +188,14 @@ def prep_data_for_decoding(
     return X, y
 
 
-# defining a function to run the decoding (simple logistic regression) and returning the results
-# using 8 parallel cores (to be adapted)
-# see also https://github.com/jdirani/MEGmvpa
 def decoding(meg_data, labels, decoder="logistic", cv=4, ncores=8, verbose=None):
     
-    # making the pipeline
-    # decoder can be "logistic" or "svc"
+    '''
+    meg_data should be of shape nb_items x channels x time_steps
+    labels should be of shape nb_items
+    '''
+
+    # defining the decoder
     if decoder=="logistic":
         
         clf = make_pipeline(StandardScaler(), LogisticRegression(solver="liblinear"))
@@ -213,10 +211,10 @@ def decoding(meg_data, labels, decoder="logistic", cv=4, ncores=8, verbose=None)
     # sliding the estimator on all time frames
     time_decod = SlidingEstimator(clf, n_jobs=ncores, scoring="roc_auc", verbose=verbose)
     
-    # here we use N-fold cross-validation
+    # using N-fold cross-validation
     scores = cross_val_multiscore(time_decod, meg_data, labels, cv=cv, n_jobs=ncores, verbose=verbose)
     
-    # returning these scores
+    # returning these scores and the estimator
     return scores, time_decod
 
 
