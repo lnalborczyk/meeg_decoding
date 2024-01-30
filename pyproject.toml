@@ -1,6 +1,15 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+# These are the assumed default build requirements from pip:
+# https://pip.pypa.io/en/stable/reference/pip/#pep-517-and-518-support
+# and https://github.com/pypa/sampleproject/blob/main/pyproject.toml
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# [build-system]
+# requires = ["hatchling", "hatch-vcs"]
+# build-backend = "hatchling.build"
+# [tool.hatch.build.targets.wheel]
+# sources = ["src"]
 
 [project]
 name = "meg_decoding_tools"
