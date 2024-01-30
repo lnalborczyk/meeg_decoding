@@ -1,4 +1,4 @@
-# meg_decoding_tools
+# meg_decoding_tools (in progress)
 
 Open source tools for M/EEG preprocessing, basic analyses, and multivariate pattern analyses (aka decoding) based on [MNE-Python](https://mne.tools/stable/index.html).
 
@@ -40,21 +40,58 @@ X, y = prep_data_for_decoding(
 )
 
 # decoding time!
-scores, time_decod = decoding(meg_data=X, labels=y, decoder="logistic_linear", cv=4, ncores=8, verbose=False)
+scores, time_decod = decoding(meg_data=X, labels=y)
 ```
 
 ### Cross-temporal and cross-task generalisation
 
-...
+```
+from mne.decoding import cross_time_cond_gen
+
+# decoding time!
+time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_train, X_test, y_train, y_test)
+```
 
 ### Group-level hypothesis testing (based on default Bayes factors)
 
 ...
 
-## State-space trajectories (latent module)
+## Visualisation
+
+### Decoding accuracy through time
+
+```
+from meg.plots import plotting_decoding_scores
+
+# plotting the decoding accuracy over time
+plotting_decoding_scores(
+    decoding_scores=scores,
+    x_ticks=decoding_epochs.times,
+    end_stim=0.2,
+    plot_title="Sensor space decoding"
+)
+```
+
+### Decoding accuracy through time with BFs
 
 ...
 
-## Visualisation
+### Decoding generalisation
+
+```
+from meg.plots import plotting_gat
+
+plotting_gat(
+    scores=time_gen_scores,
+    epochs=decoding_epochs,
+    plot_title="Temporal generalisation matrix"
+)
+```
+
+### Decoding generalisation with BFs
+
+...
+
+## State-space trajectories (latent module)
 
 ...
