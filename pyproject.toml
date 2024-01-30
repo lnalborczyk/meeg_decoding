@@ -19,7 +19,7 @@ authors = [
 ]
 description = "Open source tools for MEG preprocessing, basic analyses, and multivariate pattern analyses (aka decoding), based on MNE-Python."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 license = {file = "LICENSE"}
 
 classifiers = [

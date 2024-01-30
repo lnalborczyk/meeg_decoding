@@ -21,9 +21,17 @@ setup(
     keywords="eeg, meg, mne, decoding",
     # When your source code is in a subdirectory under the project root, e.g.
     # `src/`, it is necessary to specify the `package_dir` argument.
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
-    python_requires=">=3.8",
+    package_dir={"": "src/"},
+    packages=find_packages(where="src/"),
+    # packages=['jr', 'jr.tests',
+    #     'jr.cloud', 'jr.cloud.tests',
+    #     'jr.gat', 'jr.gat.tests',
+    #     'jr.gif', 'jr.gif.tests',
+    #     'jr.meg', 'jr.meg.tests',
+    #     'jr.model',
+    #     'jr.plot',
+    #     'jr.stats', 'jr.stats.tests'],
+    python_requires=">=3.9",
     install_requires=["mne"],
     project_urls={
         "Bug Reports": "https://github.com/lnalborczyk/meg_decoding_tools/issues",
