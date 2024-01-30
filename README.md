@@ -1,16 +1,16 @@
-# meg_decoding_tools (in progress)
+# meg_decoding_tools (work in progress)
 
 Open source tools for M/EEG preprocessing, basic analyses, and multivariate pattern analyses (aka decoding) based on [MNE-Python](https://mne.tools/stable/index.html).
 
 # Installation
 
-Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python setup.py install` or `python setup.py develop` (creating symlinks to the source directory instead of installing locally), or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
+Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python setup.py install` or `python setup.py develop` (creating symlinks to the source directory instead of installing locally).
+
+Or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
 
 # Usage
 
-## Preprocessing
-
-...
+Function from this module assume that you have some M/EEG data that is properly filtered, resampled, and epoched using MNE (i.e., it does not cover preprocessing steps).
 
 ## Decoding
 
@@ -20,7 +20,7 @@ Clone this repository with `git clone https://github.com/lnalborczyk/meg_decodin
 import mne
 import meg_decoding_tools as meg
 
-from mne.decoding import (
+from meg.decoding import (
     prep_data_for_decoding,
     decoding
 )
@@ -46,7 +46,7 @@ scores, time_decod = decoding(meg_data=X, labels=y)
 ### Cross-temporal and cross-task generalisation
 
 ```
-from mne.decoding import cross_time_cond_gen
+from meg.decoding import cross_time_cond_gen
 
 # decoding time!
 time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_train, X_test, y_train, y_test)
