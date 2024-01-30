@@ -8,11 +8,11 @@ Open source tools for M/EEG preprocessing, basic analyses, and multivariate patt
 
 Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python setup.py install` or `python setup.py develop` (creating symlinks to the source directory instead of installing locally).
 
-Or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools.git``.
+Or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools.git`.
 
 -->
 
-Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `pip install .`.
+Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python -m pip install .`.
 
 # Usage
 
@@ -23,13 +23,10 @@ Function from this module assume that you have some M/EEG data that is properly 
 ### Decoding through time
 
 ```
+# importing mne and sub-packages from meg_decoding_tools
 import mne
-import meg_decoding_tools as meg
-
-from meg.decoding import (
-    prep_data_for_decoding,
-    decoding
-)
+from decoding.decode import decoding
+from decoding.prepare import prep_data_for_decoding
 
 # for decoding, we'll keep only two categories and concatenate those
 decoding_epochs = mne.concatenate_epochs(
@@ -52,7 +49,7 @@ scores, time_decod = decoding(meg_data=X, labels=y)
 ### Cross-temporal and cross-task generalisation
 
 ```
-from meg.decoding import cross_time_cond_gen
+from decoding.decode import cross_time_cond_gen
 
 # decoding time!
 time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_train, X_test, y_train, y_test)
@@ -67,7 +64,7 @@ time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_trai
 ### Decoding accuracy through time
 
 ```
-from meg.plots import plotting_decoding_scores
+from plots.scores import plotting_decoding_scores
 
 # plotting the decoding accuracy over time
 plotting_decoding_scores(
@@ -85,7 +82,7 @@ plotting_decoding_scores(
 ### Decoding generalisation
 
 ```
-from meg.plots import plotting_gat
+from plots.scores import plotting_gat
 
 plotting_gat(
     scores=time_gen_scores,
