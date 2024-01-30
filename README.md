@@ -6,7 +6,7 @@ Open source tools for M/EEG preprocessing, basic analyses, and multivariate patt
 
 Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python setup.py install` or `python setup.py develop` (creating symlinks to the source directory instead of installing locally), or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
 
-# Usage (to-do)
+# Usage
 
 ## Preprocessing
 

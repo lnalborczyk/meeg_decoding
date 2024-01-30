@@ -48,14 +48,14 @@ def cross_time_cond_gen(X_train, X_test, y_train, y_test, ncores=-1, verbose=Non
     with generalisation accross all time points
     '''
     
-    # creating the model
+    # defining the decoder
     clf = make_pipeline(StandardScaler(), LogisticRegression(solver="liblinear"))
     time_gen = GeneralizingEstimator(clf, scoring="roc_auc", n_jobs=ncores, verbose=verbose)
     
-    # fitting it
+    # fitting it on the training data
     time_gen.fit(X=X_train, y=y_train)
     
-    # scoring on the other condition
+    # scoring on the testing data
     scores = time_gen.score(X=X_test, y=y_test)
 
     # retrieving decision values
