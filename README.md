@@ -12,11 +12,11 @@ Or install directly from Github with `pip install git+https://github.com/lnalbor
 
 -->
 
-Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python -m pip install .`.
+Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python -m pip install .`
 
 # Usage
 
-Function from this module assume that you have some M/EEG data that is properly filtered, resampled, and epoched using MNE (i.e., it does not cover preprocessing steps).
+Function from this module assume that you have some M/EEG data that is properly filtered, resampled, and epoched using MNE (i.e., it does not cover preprocessing).
 
 ## Decoding
 
