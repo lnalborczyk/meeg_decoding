@@ -14,8 +14,4 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     python_requires=">=3.9",
-    project_urls={
-        "Bug Reports": "https://github.com/lnalborczyk/meg_decoding_tools/issues",
-        "Source": "https://github.com/lnalborczyk/meg_decoding_tools/"
-    },
 )
