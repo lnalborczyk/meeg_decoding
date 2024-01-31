@@ -4,7 +4,7 @@ Open source tools for M/EEG preprocessing, basic analyses, and multivariate patt
 
 # Installation
 
-<!--
+<!--git 
 
 Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python setup.py install` or `python setup.py develop` (creating symlinks to the source directory instead of installing locally).
 
@@ -14,7 +14,7 @@ Or install directly from Github with `pip install git+https://github.com/lnalbor
 
 Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python3 -m pip install .`
 
-Or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
+Or install directly from Github with `python3 -m pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
 
 # Usage
 
@@ -28,8 +28,8 @@ Functions from this package assume that you have some M/EEG data that is properl
 # importing mne and sub-packages from meg_decoding_tools
 import mne
 import numpy as np
-from decoding.decode import time_decode
-from decoding.prepare import prep_data_for_decoding
+from meeg.decoding.decode import time_decode
+from meeg.decoding.prepare import prep_data_for_decoding
 
 # for decoding, we'll keep only two categories and concatenate those
 decoding_epochs = mne.concatenate_epochs(
@@ -52,7 +52,7 @@ scores, time_decod = time_decode(meg_data=X, labels=y)
 ### Cross-temporal and cross-task generalisation
 
 ```
-from decoding.decode import cross_time_cond_gen
+from meeg.decoding.decode import cross_time_cond_gen
 
 # decoding time!
 time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_train, X_test, y_train, y_test)
@@ -64,7 +64,7 @@ For decoding through time.
 
 ```
 import glob
-from stats.decode bfs import bf_testing_time_decod
+from meeg.stats.decode bfs import bf_testing_time_decod
 
 # listing all relevant npy files (i.e., individual-level decoding accuracies through time)
 npy_files = glob.glob("some_directory/+"*.npy")
@@ -91,7 +91,7 @@ bfs = bf_testing_time_decod(scores=scores, ncores=4)
 Or for cross-temporal and/or cross-condition decoding generalisation.
 
 ```
-from stats.decode bfs import bf_testing_gat
+from meeg.stats.decode bfs import bf_testing_gat
 
 # sanity check
 print("Participants:", participants)
@@ -125,7 +125,7 @@ bfs = bf_testing_gat(scores=scores, ncores=4)
 ### Decoding accuracy through time
 
 ```
-from plots.scores import plotting_decoding_scores
+from meeg.plots.scores import plotting_decoding_scores
 
 # plotting the decoding accuracy over time
 plotting_decoding_scores(
@@ -139,7 +139,7 @@ plotting_decoding_scores(
 ### Decoding accuracy through time with BFs
 
 ```
-from plots.bfs import bf_testing_time_decod
+from meeg.plots.bfs import bf_testing_time_decod
 
 # plotting the BFs for each time step
 bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
@@ -148,7 +148,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ### Decoding generalisation
 
 ```
-from plots.scores import plotting_gat
+from meeg.plots.scores import plotting_gat
 
 plotting_gat(
     scores=time_gen_scores,
@@ -160,7 +160,7 @@ plotting_gat(
 ### Decoding generalisation with BFs
 
 ```
-from plots.bfs import bf_testing_gat
+from meeg.plots.bfs import bf_testing_gat
 
 # plotting the BFs for each cell of the GAT matrix
 bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")

@@ -45,6 +45,10 @@ def compute_bf_parallel(args):
 
 # defining a function to compute BFs for differences with chance levels for a group of decoding accuracies over time
 def bf_testing_time_decod(scores, chance=0.5):
+
+    '''
+    scores should be a 2D numpy array of shape participants x time steps
+    '''
     
     # sanity check
     print("shape of aggregated scores:", scores.shape)
