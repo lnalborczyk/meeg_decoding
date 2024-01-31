@@ -10,11 +10,11 @@ from mne.decoding import (
     LinearModel,
 )
 
-def decoding(meg_data, labels, decoder="logistic", cv=4, ncores=-1, verbose=None):
+def time_decode(meg_data, labels, decoder="logistic", cv=4, ncores=-1, verbose=None):
     
     '''
-    meg_data should be of shape nb_items x channels x time_steps
-    labels should be of shape nb_items
+    meg_data should be of shape items x channels x time_steps
+    labels should be of length items
     '''
 
     # defining the decoder
@@ -46,6 +46,8 @@ def cross_time_cond_gen(X_train, X_test, y_train, y_test, ncores=-1, verbose=Non
     '''
     training on X_train, testing on X_test
     with generalisation accross all time points
+    meg_data should be of shape items x channels x time_steps
+    labels should be of length items
     '''
     
     # defining the decoder

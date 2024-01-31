@@ -18,10 +18,11 @@ classifiers = [
 ]
 
 dependencies = [
-  "mne",
   "numpy>=1.21.2",
+  "matplotlib>=3.5.0",
+  "mne",
   "scipy>=1.7.1",
-  "matplotlib>=3.5.0"
+  "sklearn"
 ]
 
 [project.urls]

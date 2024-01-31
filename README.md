@@ -12,7 +12,9 @@ Or install directly from Github with `pip install git+https://github.com/lnalbor
 
 -->
 
-Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python -m pip install .`
+Clone this repository with `git clone https://github.com/lnalborczyk/meg_decoding_tools` and install using `python3 -m pip install .`
+
+Or install directly from Github with `pip install git+https://github.com/lnalborczyk/meg_decoding_tools`.
 
 # Usage
 
@@ -25,7 +27,7 @@ Function from this module assume that you have some M/EEG data that is properly 
 ```
 # importing mne and sub-packages from meg_decoding_tools
 import mne
-from decoding.decode import decoding
+from decoding.decode import time_decode
 from decoding.prepare import prep_data_for_decoding
 
 # for decoding, we'll keep only two categories and concatenate those
@@ -43,7 +45,7 @@ X, y = prep_data_for_decoding(
 )
 
 # decoding time!
-scores, time_decod = decoding(meg_data=X, labels=y)
+scores, time_decod = time_decode(meg_data=X, labels=y)
 ```
 
 ### Cross-temporal and cross-task generalisation
