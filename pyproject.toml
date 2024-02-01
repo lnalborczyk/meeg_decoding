@@ -17,8 +17,8 @@ dynamic = ["version"]
 [tool.setuptools.packages.find]
 where = ["src"] # list of folders that contain the packages (["."] by default)
 
-[tool.setuptools.dynamic]
-version = {attr = "meg_decoding_tools.VERSION"}
+# [tool.setuptools.dynamic]
+# version = {attr = "meg_decoding_tools.VERSION"}
 
 classifiers = [
   "Development Status :: 3 - Alpha",
