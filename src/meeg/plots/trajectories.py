@@ -2,22 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib import cm
+from adjustText import adjust_text
 
 
 def plot_neural_trajectories_2d(
-    x_pca, x_pca_std=None, fs=1000, cmap="magma", add_line=False,
-    plot_title="Neural trajectories through the entire trial", savefig=True
-):
+    x_pca, x_pca_std=None, fs=1000, cmap="magma",
+    plot_title="Neural trajectories"
+    ):
     
     # assigning colours to timepoints
     timepoints = np.arange(x_pca.shape[0]) / (1 / fs)
     colormap = cm.get_cmap(cmap)
     norm = plt.Normalize(vmin = timepoints.min(), vmax = timepoints.max() )
-    
-    # checking number of timepoints
-    # print(len(timepoints))
 
-    # plotting (normalised) variability as dot transparency
+    # plotting (normalised) variability as dot size/transparency
     if x_pca_std is None:
         
         scatter_alpha = 1
@@ -31,43 +29,32 @@ def plot_neural_trajectories_2d(
     # plotting time
     fig = plt.figure(figsize = (12, 9) )
     scatter = plt.scatter(x_pca[:,0], x_pca[:,1], c = timepoints, cmap = colormap, norm = norm, alpha = scatter_alpha, s = 20 * scatter_alpha)
-    if add_line: line = plt.plot(x_pca[:, 0], x_pca[:, 1], lw = 1, c = "black", alpha = 0.2)[0]
 
-    # plotting crucial timepoints
-    time_point = 0
-    plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "red")
-    print("200ms before stimulus onset (red):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    time_point = int(0.2 / (1 / fs))
-    plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "green")
-    print("Stimulus onset (green):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    time_point = int(0.4 / (1 / fs))
-    plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "orange")
-    print("Stimulus offset (orange):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
     # defining axes labels etc
     plt.colorbar(scatter, label = "Time (s)")
-    # cbar.ax.set_xticklabels(['Low', 'Medium', 'High']) 
     plt.xlabel("PC 1")
     plt.ylabel("PC 2")
-    # plt.title("PCA neural trajectories")
     plt.title(plot_title)
+    
+    # polishing the layout
+    plt.tight_layout()
+
+    # showing the plot
     plt.show()
 
-    # saving the plot
-    if savefig: plt.savefig(fname="tickertape02_c/neural_trajectories_2d.png", dpi=200, facecolor="white", transparent=False)
+    # returning the figure
+    return fig
 
 
-def plot_neural_trajectories_3d(x_pca, x_pca_std=None, fs=1000, cmap="magma", add_line=False, plot_title="Neural trajectories through the entire trial"):
+def plot_neural_trajectories_3d(
+        x_pca, x_pca_std=None, fs=1000, cmap="magma",
+        plot_title="Neural trajectories"
+        ):
     
     # assigning colours to timepoints
     timepoints = np.arange(x_pca.shape[0]) / (1 / fs)
     colormap = cm.get_cmap(cmap)
     norm = plt.Normalize(vmin = timepoints.min(), vmax = timepoints.max() )
-    
-    # checking number of timepoints
-    # print(len(timepoints))
 
     # plotting (normalised) variability as dot transparency
     if x_pca_std is None:
@@ -85,23 +72,6 @@ def plot_neural_trajectories_3d(x_pca, x_pca_std=None, fs=1000, cmap="magma", ad
     ax = plt.axes(projection = "3d")
     
     sc = ax.scatter(x_pca[:, 0], x_pca[:, 1], x_pca[:, 2], c = timepoints, cmap = colormap, s = 30, alpha = scatter_alpha)
-    #line = plt.plot(x_pca[:, 0], x_pca[:, 1], x_pca[:, 2], lw = 1, c = "black", alpha = 0.2)[0]
-    
-    ################################################################################
-    # plotting markers for periods changes within the trial
-    ########################################################################
-    
-    time_point = 0
-    ax.scatter(x_pca[time_point, 0], x_pca[time_point, 1], x_pca[time_point, 2], marker = "o", s = 300, c = "red")
-    print("200ms before stimulus onset (red):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    time_point = int(0.2 / (1 / fs) )
-    ax.scatter(x_pca[time_point, 0], x_pca[time_point, 1], x_pca[time_point, 2], marker = "o", s = 300, c = "green")
-    print("Stimulus onset (green):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    time_point = int(0.4 / (1 / fs) )
-    ax.scatter(x_pca[time_point, 0], x_pca[time_point, 1], x_pca[time_point, 2], marker = "o", s = 300, c = "orange")
-    print("Stimulus offset (orange):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
     
     ax.view_init(20, 20, 0)
     plt.colorbar(sc, label = "Time (s)")
@@ -111,13 +81,21 @@ def plot_neural_trajectories_3d(x_pca, x_pca_std=None, fs=1000, cmap="magma", ad
     ax.set_zlabel("PC3")
     ax.set_title(plot_title)
     
+    # polishing the layout
+    plt.tight_layout()
+
+    # showing the plot
     plt.show()
+
+    # returning the figure
+    return fig
 
 
 def compare_neural_trajectories_2d(
-    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None, fs=1000,
-    plot_title="Neural trajectories through the entire trial"
-):
+    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None,
+    fs=1000,
+    plot_title="Neural trajectories"
+    ):
     
     # assigning colours to timepoints
     timepoints = np.arange(x_pca1.shape[0]) / (1 / fs)
@@ -155,19 +133,6 @@ def compare_neural_trajectories_2d(
         s = 20 * scatter_alpha2
     )
 
-    # plotting crucial timepoints
-    # time_point = 0
-    # plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "red")
-    # print("200ms before stimulus onset (red):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    # time_point = int(0.2 / 0.001)
-    # plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "green")
-    # print("Stimulus onset (green):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
-    # time_point = int(0.4 / 0.001)
-    # plt.scatter(x_pca[time_point, 0], x_pca[time_point, 1], marker = "o", s = 300, c = "orange")
-    # print("Stimulus offset (orange):", round(x_pca[time_point, 0], 3), round(x_pca[time_point, 1], 3), round(x_pca[time_point, 2], 3) )
-    
     # defining axes labels etc
     plt.colorbar(scatter1, label = "Time in visual blocks (s)")
     plt.colorbar(scatter2, label = "Time in auditory blocks (s)")
@@ -186,9 +151,10 @@ def compare_neural_trajectories_2d(
 
 
 def compare_neural_trajectories_3d(
-    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None, fs=1000,
-    plot_title="Neural trajectories through the entire trial"
-):
+    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None,
+    fs=1000,
+    plot_title="Neural trajectories"
+    ):
     
     # assigning colours to timepoints
     timepoints = np.arange(x_pca1.shape[0]) / (1 / fs)
@@ -196,9 +162,6 @@ def compare_neural_trajectories_3d(
     colormap1 = cm.get_cmap("Blues")
     colormap2 = cm.get_cmap("Oranges")
     norm = plt.Normalize(vmin = timepoints.min(), vmax = timepoints.max() )
-    
-    # checking number of timepoints
-    # print(len(timepoints))
 
     # plotting (normalised) variability as dot transparency
     if x_pca_std1 is None:
@@ -225,8 +188,8 @@ def compare_neural_trajectories_3d(
     ax.view_init(22.5, 45, 0)
 
     # defining axes labels etc
-    plt.colorbar(sc1, label = "Time in visual blocks (s)")
-    plt.colorbar(sc2, label = "Time in auditory blocks (s)")
+    plt.colorbar(sc1, label = "Time (s)")
+    plt.colorbar(sc2, label = "Time (s)")
     
     ax.set_xlabel("PC1")
     ax.set_ylabel("PC2")
@@ -243,9 +206,10 @@ def compare_neural_trajectories_3d(
 
 
 def compare_neural_trajectories_3d_animated(
-    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None, fs=1000, time_interval=100,
-    plot_title="Neural trajectories through the entire trial (visual trials in blue, auditory trials in orange)"
-):
+    x_pca1, x_pca2, x_pca_std1=None, x_pca_std2=None,
+    fs=1000, time_interval=100,
+    plot_title="Neural trajectories"
+    ):
     
     # assigning colours to timepoints
     timepoints = np.arange(x_pca1.shape[0]) / (1 / fs)
@@ -253,9 +217,6 @@ def compare_neural_trajectories_3d_animated(
     colormap2 = cm.get_cmap("Oranges")
     norm = plt.Normalize(vmin = timepoints.min(), vmax = timepoints.max() )
     
-    # checking number of timepoints
-    # print(len(timepoints))
-
     # plotting (normalised) variability as dot transparency
     if x_pca_std1 is None:
         
