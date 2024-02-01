@@ -11,7 +11,7 @@ setup(
     # url="https://github.com/lnalborczyk/meg_decoding_tools",
     # author="Ladislas Nalborczyk",
     # author_email="ladislas.nalborczyk@gmail.com",
-    # packages=find_packages(where="src"),
-    # package_dir={"": "src"},
+    packages=find_packages(where="src/meeg"),
+    package_dir={"": "src/meeg"},
     # python_requires=">=3.9",
 )
