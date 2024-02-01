@@ -16,6 +16,7 @@ dynamic = ["version"]
 
 [tool.setuptools.packages.find]
 where = ["src/meeg"]
+namespaces = false
 
 # [tool.setuptools.dynamic]
 # version = {attr = "meg_decoding_tools.VERSION"}
