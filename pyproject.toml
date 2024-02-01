@@ -24,7 +24,8 @@ dependencies = [
   "scipy>=1.9.3",
   "scikit-learn",
   "pandas",
-  "seaborn"
+  "seaborn",
+  "adjustText"
 ]
 
 [project.urls]
