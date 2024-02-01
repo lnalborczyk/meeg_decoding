@@ -29,7 +29,6 @@ Functions from this package assume that you have some M/EEG data that is properl
 ```
 # importing mne and sub-packages from meg_decoding_tools
 import mne
-import numpy as np
 from meeg.decoding.decode import time_decode
 from meeg.decoding.prepare import prep_data_for_decoding
 
