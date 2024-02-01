@@ -15,8 +15,7 @@ license = {file = "LICENSE"}
 dynamic = ["version"]
 
 [tool.setuptools.packages.find]
-where = ["src/meeg"] # list of folders that contain the packages (["."] by default)
-namespaces = false # to disable scanning PEP 420 namespaces (true by default)
+where = ["src/meeg"]
 
 # [tool.setuptools.dynamic]
 # version = {attr = "meg_decoding_tools.VERSION"}
