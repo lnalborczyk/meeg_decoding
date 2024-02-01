@@ -13,10 +13,10 @@ from adjustText import adjust_text
 def bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding", chance=0.5):
     
     # sanity check (these should be the same)
-    print("shape of aggregated scores:", scores.shape, "shape of BFs:", bf.shape)
+    # print("shape of aggregated scores:", scores.shape, "shape of BFs:", bf.shape)
 
     # returning an error message if condition is not met
-   # assert(scores.shape == bf.shape, "scores and bf objects should have the same shape")
+    assert scores.shape == bf.shape, "scores and bf objects should have the same shape"
 
     # converting scores to a dataframe [this should be participants x timepoints accuracy matrix]
     # df = pd.DataFrame(scores)

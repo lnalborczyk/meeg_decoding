@@ -1,6 +1,6 @@
 # meg_decoding_tools (work in progress)
 
-Open source tools for M/EEG preprocessing, basic analyses, and multivariate pattern analyses (aka decoding) based on [MNE-Python](https://mne.tools/stable/index.html).
+Open source tools for M/EEG multivariate pattern analyses (aka decoding) and state-space analyses, based on [MNE-Python](https://mne.tools/stable/index.html).
 
 # Installation
 
@@ -20,7 +20,7 @@ python3 -m pip install .
 
 # Usage
 
-Functions from this package assume that you have some M/EEG data that is properly filtered, resampled, and epoched using MNE (i.e., it does not cover preprocessing).
+Functions from this package assume that you have some M/EEG data that is properly filtered, resampled, and epoched using [MNE-Python](https://mne.tools/stable/index.html) (i.e., it does not cover preprocessing).
 
 ## Decoding
 
