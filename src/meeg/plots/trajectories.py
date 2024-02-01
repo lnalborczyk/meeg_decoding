@@ -6,8 +6,7 @@ from adjustText import adjust_text
 
 
 def plot_neural_trajectories_2d(
-    x_pca, x_pca_std=None, fs=1000, cmap="magma",
-    plot_title="Neural trajectories"
+    x_pca, x_pca_std=None, fs=1000, cmap="magma", plot_title="Neural trajectories"
     ):
     
     # assigning colours to timepoints
@@ -47,8 +46,7 @@ def plot_neural_trajectories_2d(
 
 
 def plot_neural_trajectories_3d(
-        x_pca, x_pca_std=None, fs=1000, cmap="magma",
-        plot_title="Neural trajectories"
+        x_pca, x_pca_std=None, fs=1000, cmap="magma", plot_title="Neural trajectories"
         ):
     
     # assigning colours to timepoints
@@ -302,20 +300,6 @@ def compare_neural_trajectories_3d_animated(
     plt.plot(x_pca2[time_point, 0], x_pca2[time_point, 1], x_pca2[time_point, 2], marker = "o", c = "red")
     
     ax.view_init(22.5, 45, 0)
-
-    # defining axes labels etc
-    # plt.colorbar(sc1, label = "Time in visual blocks (s)")
-    # plt.colorbar(sc2, label = "Time in auditory blocks (s)")
-    
-    # ax.set_xlabel("PC1")
-    # ax.set_ylabel("PC2")
-    # ax.set_zlabel("PC3")
-    
-    # defining the plot's title
-    # ax.set_title(plot_title)
-
-    # polishing the layout
-    # plt.tight_layout()
 
     # animating the plot
     N = x_pca1.shape[0]
