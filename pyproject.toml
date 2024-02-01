@@ -18,10 +18,10 @@ classifiers = [
 ]
 
 dependencies = [
-  "numpy>=1.21.2",
-  "matplotlib>=3.5.0",
+  "numpy>=1.24",
+  "matplotlib>=3.7",
   "mne",
-  "scipy>=1.7.1",
+  "scipy>=1.9.3",
   "scikit-learn",
   "pandas",
   "seaborn"

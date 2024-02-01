@@ -20,7 +20,7 @@ python3 -m pip install .
 
 # Usage
 
-Functions from this package assume that you have some M/EEG data that is properly filtered, resampled, and epoched using [MNE-Python](https://mne.tools/stable/index.html) (i.e., it does not cover preprocessing).
+Functions from this package assume that you have some M/EEG data that is properly filtered, resampled, and epoched using [MNE-Python](https://mne.tools/stable/index.html) (i.e., it does not cover preprocessing). See the notebooks in `./examples/` for more details and examples.
 
 ## Decoding
 
