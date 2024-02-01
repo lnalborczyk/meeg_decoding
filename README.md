@@ -41,7 +41,7 @@ decoding_epochs = mne.concatenate_epochs(
 # preparing MNE epochs and labels for decoding
 X, y = prep_data_for_decoding(
     epochs=decoding_epochs,
-    pca=False, n_components=60,
+    pca=True, n_components=60,
     moving_average=True, kernel_size=5,
     trials_averaging=False, ntrials=2, shuffling_or_not=True
 )
@@ -151,6 +151,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ```
 from meeg.plots import plotting_gat
 
+# plotting the accuracy of across-time generalisation
 plotting_gat(
     scores=time_gen_scores,
     epochs=decoding_epochs,
@@ -174,7 +175,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ```
 from meeg.latent import compare_pca_through_time
 
-# compute average neural trajectories (and across-trial SD) in a common PCA space
+# computing average neural trajectories (and across-trial SD) in a common PCA space
 epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_through_time(epochs1, epochs2, n_components=10)
 ```
 
@@ -183,7 +184,7 @@ epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_thr
 ```
 from meeg.latent import dsa
 
-# commuting dynamical similarity analysis between neural trajectories
+# computing dynamical similarity between neural trajectories
 # see https://github.com/mitchellostrow/DSA/tree/main
 dsa(epochs1, epochs2, n_delays=10, pca_components=10, verbose=False)
 ```
