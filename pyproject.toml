@@ -10,8 +10,8 @@ description = "Open source tools for MEG preprocessing, basic analyses, and mult
 readme = "README.md"
 keywords=["eeg, meg, mne, decoding",]
 requires-python = ">=3.9"
-# license = {file = "LICENSE"}
-license = "BSD-2-Clause"
+license = {file = "LICENSE"}
+# license = "BSD-2-Clause"
 dynamic = ["version"]
 
 [tool.setuptools.packages.find]

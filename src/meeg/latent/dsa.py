@@ -1,9 +1,3 @@
-
-import numpy as np
-import mne
-from mne.decoding import UnsupervisedSpatialFilter
-from sklearn.decomposition import PCA
-from DSA import DSA
 from DSA.dmd import DMD
 from DSA.stats import *
 from meeg.latent import compare_pca_through_time
