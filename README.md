@@ -168,4 +168,21 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 
 ## State-space trajectories (latent module)
 
-...
+### Neural trajectories
+
+```
+from meeg.latent.trajectories import compare_pca_through_time
+
+# compute average neural trajectories (and across-trial SD) in a common PCA space
+epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_through_time(epochs1, epochs2, n_components=10)
+```
+
+### Dynamical similarity analysis
+
+```
+from meeg.latent.dsa import dsa
+
+# commuting dynamical similarity analysis between neural trajectories
+# see https://github.com/mitchellostrow/DSA/tree/main
+dsa(epochs1, epochs2, n_delays=10, pca_components=10, verbose=False)
+```

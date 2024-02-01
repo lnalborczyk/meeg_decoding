@@ -10,7 +10,15 @@ description = "Open source tools for MEG preprocessing, basic analyses, and mult
 readme = "README.md"
 keywords=["eeg, meg, mne, decoding",]
 requires-python = ">=3.9"
-license = {file = "LICENSE"}
+# license = {file = "LICENSE"}
+license = "BSD-2-Clause"
+dynamic = ["version"]
+
+[tool.setuptools.packages.find]
+where = ["src"] # list of folders that contain the packages (["."] by default)
+
+[tool.setuptools.dynamic]
+version = {attr = "meg_decoding_tools.VERSION"}
 
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -27,4 +35,5 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://github.com/lnalborczyk/meg_decoding_tools"
+Repository = "https://github.com/lnalborczyk/meg_decoding_tools"
 Issues = "https://github.com/lnalborczyk/meg_decoding_tools/issues"
