@@ -2,6 +2,7 @@ import numpy as np
 import mne
 from mne.decoding import UnsupervisedSpatialFilter
 from sklearn.decomposition import PCA
+from meeg.decoding import prep_data_for_decoding
 
 
 def pca_through_time(epochs, n_components=10):
@@ -14,12 +15,6 @@ def pca_through_time(epochs, n_components=10):
         moving_average_with_decim=False, decim=4,
         trials_averaging=False, ntrials=4, shuffling_or_not=True
     )
-
-    # trying out t-SNE instead?
-    # !pip install threadpoolctl==3.1.0
-    # tsne = TSNE(n_components = 2, perplexity = 100)
-    # x_tsne = tsne.fit_transform(np.transpose(X) )
-    # print("Shape of tSNE object:", x_tsne.shape)
     
     # averaging these data across trials
     x_pca = np.mean(X, axis=0).transpose()
@@ -42,7 +37,6 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
 
     pca_global = PCA(n_components)
     pca = UnsupervisedSpatialFilter(pca_global, average=False)
-    pca_data = pca.fit_transform(concatenated_epochs.get_data())
 
     # projecting original data onto a global (common) space
     trials1 = epochs1.get_data()

@@ -167,7 +167,7 @@ def prep_data_for_decoding(
 ):
 
     # retrieving the MEG signals: n_epochs, n_meg_channels, n_times
-    X = epochs.get_data()
+    X = epochs.get_data(copy=False)
 
     # retrieving the labels (i.e., items categories)
     # y = epochs.events[:, 2]

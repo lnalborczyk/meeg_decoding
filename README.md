@@ -176,7 +176,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 from meeg.latent import compare_pca_through_time
 
 # computing average neural trajectories (and across-trial SD) in a common PCA space
-epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_through_time(epochs1, epochs2, n_components=10)
+epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = compare_pca_through_time(epochs1, epochs2, n_components=10)
 ```
 
 ### Dynamical similarity analysis
