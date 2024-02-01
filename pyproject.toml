@@ -15,10 +15,10 @@ license = {file = "LICENSE"}
 dynamic = ["version"]
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = {"" = "src/meeg"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src/meeg"]
 namespaces = false
 
 # [tool.setuptools.dynamic]
