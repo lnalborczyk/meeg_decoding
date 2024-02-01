@@ -92,7 +92,7 @@ bfs = bf_testing_time_decod(scores=scores, ncores=4)
 Or for cross-temporal and/or cross-condition decoding generalisation.
 
 ```
-from meeg.stats bfs import bf_testing_gat
+from meeg.stats import bf_testing_gat
 
 # sanity check
 print("Participants:", participants)
@@ -167,7 +167,7 @@ from meeg.plots import bf_testing_gat
 bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ```
 
-## State-space trajectories (latent module)
+## State-space analyses
 
 ### Neural trajectories
 
