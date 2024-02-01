@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools >= 65.5", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -15,11 +15,15 @@ license = {file = "LICENSE"}
 [tool.setuptools]
 platforms = ["any"]
 
-[tool.setuptools.package-dir]
-"" = "src"
+[tool.setuptools.packages]
+find = {} # scanning the project directory with the default parameters
 
-[tool.setuptools.packages.find]
-where = ["src"]
+# [tool.setuptools.package-dir]
+# "" = "src"
+
+# [tool.setuptools.packages.find]
+# where = ["src"]
+# namespaces = false # true by default
 
 classifiers = [
   "Development Status :: 3 - Alpha",
