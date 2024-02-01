@@ -103,7 +103,10 @@ def bf_testing_gat(
 ):
     
     # sanity check (these should be the same)
-    print("shape of aggregated scores:", scores.shape, "shape of BFs:", bf.shape)
+    # print("shape of aggregated scores:", scores.shape, "shape of BFs:", bf.shape)
+
+    # returning an error message if condition is not met
+    assert scores.shape == bf.shape, "scores and bf objects should have the same shape"
     
     # defining the plot grid
     fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 9), constrained_layout=False, sharey=False)

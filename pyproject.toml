@@ -22,7 +22,11 @@ dependencies = [
   "matplotlib>=3.5.0",
   "mne",
   "scipy>=1.7.1",
-  "scikit-learn"
+  "scikit-learn",
+  "pandas",
+  "rpy2",
+  "multiprocessing",
+  "seaborn"
 ]
 
 [project.urls]
