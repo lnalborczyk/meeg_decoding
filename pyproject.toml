@@ -14,8 +14,11 @@ license = {file = "LICENSE"}
 # license = "BSD-2-Clause"
 dynamic = ["version"]
 
+[tool.setuptools]
+package-dir = {"" = "src"}
+
 [tool.setuptools.packages.find]
-where = ["src/meeg"]
+where = ["src"]
 namespaces = false
 
 # [tool.setuptools.dynamic]
