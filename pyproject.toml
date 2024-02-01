@@ -24,8 +24,6 @@ dependencies = [
   "scipy>=1.7.1",
   "scikit-learn",
   "pandas",
-  "rpy2",
-  "multiprocessing",
   "seaborn"
 ]
 
