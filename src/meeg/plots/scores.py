@@ -51,7 +51,7 @@ def plotting_decoding_scores(
     
     # specifying axis labels
     ax.set_title(plot_title, size=14, weight=800)
-    ax.set_xlabel("Time (in seconds)", size=12)
+    ax.set_xlabel("Time (s)", size=12)
     ax.set_ylabel("Decoding accuracy (AUC)", size=12)
     
     # adding a legend
@@ -98,7 +98,7 @@ def plotting_gat(
     if xlab is not None:
         ax.set_xlabel(xlab)
     else:
-        ax.set_xlabel("Testing time (in seconds)")
+        ax.set_xlabel("Testing time (s)")
     
     if ylab is not None:
         ax.set_ylabel(ylab)
