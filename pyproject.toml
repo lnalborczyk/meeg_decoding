@@ -18,7 +18,7 @@ dynamic = ["version"]
 # package-dir = {"" = "src/meeg"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src/meeg"]
 # namespaces = false
 
 # [tool.setuptools.dynamic]
