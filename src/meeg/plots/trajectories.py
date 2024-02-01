@@ -134,8 +134,8 @@ def compare_neural_trajectories_2d(
     )
 
     # defining axes labels etc
-    plt.colorbar(scatter1, label = "Time in visual blocks (s)")
-    plt.colorbar(scatter2, label = "Time in auditory blocks (s)")
+    plt.colorbar(scatter1, label = "Time (s)")
+    plt.colorbar(scatter2, label = "Time (s)")
     plt.xlabel("PC 1")
     plt.ylabel("PC 2")
     plt.title(plot_title)
