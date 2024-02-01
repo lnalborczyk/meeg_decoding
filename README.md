@@ -29,8 +29,8 @@ Functions from this package assume that you have some M/EEG data that is properl
 ```
 # importing mne and sub-packages from meg_decoding_tools
 import mne
-from meeg.decoding.decode import time_decode
-from meeg.decoding.prepare import prep_data_for_decoding
+from meeg.decoding import time_decode
+from meeg.decoding import prep_data_for_decoding
 
 # for decoding, we'll keep only two categories and concatenate those
 decoding_epochs = mne.concatenate_epochs(
@@ -53,7 +53,7 @@ scores, time_decod = time_decode(meg_data=X, labels=y)
 ### Cross-temporal and cross-task generalisation
 
 ```
-from meeg.decoding.decode import cross_time_cond_gen
+from meeg.decoding import cross_time_cond_gen
 
 # decoding time!
 time_gen_scores, decision_values, y_predicted_probs = cross_time_cond_gen(X_train, X_test, y_train, y_test)
@@ -65,7 +65,7 @@ For decoding through time.
 
 ```
 import glob
-from meeg.stats.decode bfs import bf_testing_time_decod
+from meeg.stats import bf_testing_time_decod
 
 # listing all relevant npy files (i.e., individual-level decoding accuracies through time)
 npy_files = glob.glob("some_directory/+"*.npy")
@@ -92,7 +92,7 @@ bfs = bf_testing_time_decod(scores=scores, ncores=4)
 Or for cross-temporal and/or cross-condition decoding generalisation.
 
 ```
-from meeg.stats.decode bfs import bf_testing_gat
+from meeg.stats bfs import bf_testing_gat
 
 # sanity check
 print("Participants:", participants)
@@ -126,7 +126,7 @@ bfs = bf_testing_gat(scores=scores, ncores=4)
 ### Decoding accuracy through time
 
 ```
-from meeg.plots.scores import plotting_decoding_scores
+from meeg.plots import plotting_decoding_scores
 
 # plotting the decoding accuracy over time
 plotting_decoding_scores(
@@ -140,7 +140,7 @@ plotting_decoding_scores(
 ### Decoding accuracy through time with BFs
 
 ```
-from meeg.plots.bfs import bf_testing_time_decod
+from meeg.plots import bf_testing_time_decod
 
 # plotting the BFs for each time step
 bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
@@ -149,7 +149,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ### Decoding generalisation
 
 ```
-from meeg.plots.scores import plotting_gat
+from meeg.plots import plotting_gat
 
 plotting_gat(
     scores=time_gen_scores,
@@ -161,7 +161,7 @@ plotting_gat(
 ### Decoding generalisation with BFs
 
 ```
-from meeg.plots.bfs import bf_testing_gat
+from meeg.plots import bf_testing_gat
 
 # plotting the BFs for each cell of the GAT matrix
 bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
@@ -172,7 +172,7 @@ bf_testing_time_decod(scores, bf, plot_title="Sensor space decoding")
 ### Neural trajectories
 
 ```
-from meeg.latent.trajectories import compare_pca_through_time
+from meeg.latent import compare_pca_through_time
 
 # compute average neural trajectories (and across-trial SD) in a common PCA space
 epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_through_time(epochs1, epochs2, n_components=10)
@@ -181,7 +181,7 @@ epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = meg.compare_pca_thr
 ### Dynamical similarity analysis
 
 ```
-from meeg.latent.dsa import dsa
+from meeg.latent import dsa
 
 # commuting dynamical similarity analysis between neural trajectories
 # see https://github.com/mitchellostrow/DSA/tree/main

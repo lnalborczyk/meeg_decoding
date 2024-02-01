@@ -378,3 +378,17 @@ def compare_neural_trajectories_3d_animated(
     # returning the animated plot
     return anim
 
+
+def plot_embeddings(points, points_color, labels, plot_title):
+    
+    fig, ax = plt.subplots(figsize=(12, 9), facecolor="white", constrained_layout=True)
+    fig.suptitle(plot_title, size=16)
+    x, y = points.T
+    ax.scatter(x, y, c=points_color, s=100, alpha=0.8)
+    texts = []
+    
+    for x, y, s in zip(x, y, labels):
+        texts.append(plt.text(x, y, s))
+    
+    adjust_text(texts, only_move={"points":"y", "texts":"y"}, arrowprops=dict(arrowstyle="->", color="r", lw=0.5))
+
