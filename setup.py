@@ -5,7 +5,9 @@ from setuptools import setup
 # here = pathlib.Path(__file__).parent.resolve()
 # long_description = (here/"README.md").read_text(encoding="utf-8")
 
-setup(
+setup()
+
+# setup(
     # description="Open source tools for MEG preprocessing, basic analyses, and multivariate pattern analyses (aka decoding), based on MNE-Python.",
     # long_description=long_description,
     # long_description_content_type="text/markdown",
@@ -15,4 +17,4 @@ setup(
     # packages=find_packages(where="src/meeg"),
     # package_dir={"": "src/meeg"},
     # python_requires=">=3.9",
-)
+# )

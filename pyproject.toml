@@ -12,6 +12,12 @@ keywords=["eeg, meg, mne, decoding",]
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 
+[tool.setuptools]
+platforms = ["any"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
