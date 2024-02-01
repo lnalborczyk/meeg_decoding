@@ -1,6 +1,7 @@
 from DSA.dmd import DMD
 from DSA.stats import *
-from ..latent import compare_pca_through_time
+# from ..latent import compare_pca_through_time
+from .trajectories import compare_pca_through_time
 
 
 def dsa(epochs1, epochs2, n_delays=10, pca_components=10, verbose=False):
