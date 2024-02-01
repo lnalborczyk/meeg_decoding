@@ -12,18 +12,18 @@ keywords=["eeg, meg, mne, decoding",]
 requires-python = ">=3.9"
 license = {file = "LICENSE"}
 
-[tool.setuptools]
-platforms = ["any"]
+# [tool.setuptools]
+# platforms = ["any"]
 
-[tool.setuptools.packages]
-find = {} # scanning the project directory with the default parameters
+# [tool.setuptools.packages]
+# find = {} # scanning the project directory with the default parameters
 
 # [tool.setuptools.package-dir]
 # "" = "src"
 
-# [tool.setuptools.packages.find]
-# where = ["src"]
-# namespaces = false # true by default
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false # true by default
 
 classifiers = [
   "Development Status :: 3 - Alpha",
