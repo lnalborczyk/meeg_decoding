@@ -179,6 +179,13 @@ from meeg.latent import compare_pca_through_time
 epochs1_pca, epochs1_pca_std, epochs2_pca, epochs2_pca_std = compare_pca_through_time(epochs1, epochs2, n_components=10)
 ```
 
+```
+from meeg.latent import stats_trajectories
+
+# computing mean, std, speed, and curvature of latent trajectory
+pca_mean, pca_std, speed, curvature = stats_trajectories(epochs, n_components=10)
+```
+
 ### Dynamical similarity analysis
 
 ```
