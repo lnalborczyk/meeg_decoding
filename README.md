@@ -1,4 +1,4 @@
-# meg_decoding_tools (work in progress)
+# meeg_decoding (work in progress)
 
 Open source tools for M/EEG multivariate pattern analyses (aka decoding) and state-space analyses, based on [MNE-Python](https://mne.tools/stable/index.html).
 
@@ -7,16 +7,18 @@ Open source tools for M/EEG multivariate pattern analyses (aka decoding) and sta
 Install directly from Github with:
 
 ```
-python3 -m pip install git+https://github.com/lnalborczyk/meg_decoding_tools
+python3 -m pip install git+https://github.com/lnalborczyk/meeg_decoding
 ```
 
 Or clone this repository and install locally with:
 
 ```
-git clone https://github.com/lnalborczyk/meg_decoding_tools
-cd meg_decoding_tools
+git clone https://github.com/lnalborczyk/meeg_decoding
+cd meeg_decoding
 python3 -m pip install .
 ```
+
+This package requires python 3.9 or higher.
 
 # Usage
 
@@ -27,7 +29,7 @@ Functions from this package assume that you have some M/EEG data that is properl
 ### Decoding through time
 
 ```
-# importing mne and sub-packages from meg_decoding_tools
+# importing mne and sub-packages from meeg_decoding
 import mne
 from meeg.decoding import time_decode
 from meeg.decoding import prep_data_for_decoding

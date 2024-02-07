@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "meg_decoding_tools"
+name = "meeg_decoding"
 version = "0.0.1"
 authors = [{name="Ladislas Nalborczyk", email="ladislas.nalborczyk@gmail.com"},]
 description = "Open source tools for M/EEG multivariate pattern analyses (aka decoding) and state-space analyses, based on MNE-Python."
@@ -29,6 +29,6 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/lnalborczyk/meg_decoding_tools"
-Repository = "https://github.com/lnalborczyk/meg_decoding_tools"
-Issues = "https://github.com/lnalborczyk/meg_decoding_tools/issues"
+Homepage = "https://github.com/lnalborczyk/meeg_decoding"
+Repository = "https://github.com/lnalborczyk/meeg_decoding"
+Issues = "https://github.com/lnalborczyk/meeg_decoding/issues"
