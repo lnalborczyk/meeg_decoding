@@ -66,11 +66,19 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
     pca_global = PCA(n_components)
     pca = UnsupervisedSpatialFilter(pca_global, average=False)
 
-    # projecting original data onto a global (common) space
+    # retrieving the MEG data
     trials1 = epochs1.get_data()
     trials2 = epochs2.get_data()
-    score1_global = pca.fit_transform(trials1[0:794, :, :])
-    score2_global = pca.fit_transform(trials2[0:794, :, :])
+
+    # if needed, cutting data so that both epochs have the same number of trials
+    if trials1.shape[0] == trials2.shape[0]:
+        nb_trials = trials1.shape[0]
+    else:
+        nb_trials = np.min(trials1.shape[0], trials2.shape[0])
+
+    # projecting original data onto a global (common) space
+    score1_global = pca.fit_transform(trials1[0:nb_trials, :, :])
+    score2_global = pca.fit_transform(trials2[0:nb_trials, :, :])
         
     # averaging these PCA trajectories across trials
     x_pca1 = np.mean(score1_global, axis=0).transpose()

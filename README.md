@@ -70,7 +70,7 @@ import glob
 from meeg.stats import bf_testing_time_decod
 
 # listing all relevant npy files (i.e., individual-level decoding accuracies through time)
-npy_files = glob.glob("some_directory/+"*.npy")
+npy_files = glob.glob("some_directory/"+"*.npy")
 
 # initialising an empty list to store the arrays
 scores_arr = []

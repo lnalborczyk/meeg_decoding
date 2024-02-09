@@ -148,6 +148,9 @@ def PCA_epochsArray(array, n_comp):
     Prints explained variance when using n_comp.
     '''
     
+    # select the number of dimensions so that explained variance is > 99%
+    # pca = UnsupervisedSpatialFilter(PCA(n_components=0.99, svd_solver = 'full'), average=False)
+    
     mdl_PCA = PCA(n_comp)
     pca = UnsupervisedSpatialFilter(mdl_PCA, average=False)
     pca_data = pca.fit_transform(array)
@@ -170,8 +173,8 @@ def prep_data_for_decoding(
     X = epochs.get_data(copy=False)
 
     # retrieving the labels (i.e., items categories)
-    # y = epochs.events[:, 2]
-    y = abs((epochs.events[:, 2]-1) // 10)
+    # y = abs((epochs.events[:, 2]-1) // 10)
+    y = epochs.events[:, 2]
 
     # some sanity checks
     print("Original shape of the MEG data:", X.shape)
@@ -198,9 +201,6 @@ def prep_data_for_decoding(
         print("Moving average applied with decim factor:", decim)
     
     if pca:
-
-        # select the number of dimensions so that explained variace is > 99%
-        # pca = UnsupervisedSpatialFilter(PCA(n_components=0.99, svd_solver = 'full'), average=False)
         
         # or reduce to n_components dimensions
         X = PCA_epochsArray(array=X, n_comp=n_components)

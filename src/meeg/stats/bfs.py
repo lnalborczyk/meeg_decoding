@@ -9,7 +9,7 @@ from rpy2.robjects.conversion import localconverter
 bf_package=importr("BayesFactor")
 
 
-def compute_bf(data, i=None, j=None):
+def compute_bf(data, bf_type=None):
 
     '''
     data should be a 2D numpy array of shape participants x time steps
@@ -23,17 +23,26 @@ def compute_bf(data, i=None, j=None):
         r_data = ro.conversion.py2rpy(df)
         
     # computing the BF
-    # results=bf_package.ttestBF(x=r_data[0], mu=0, rscale="medium", nullInterval=[float("-inf"), 0])
-    # results=bf_package.ttestBF(x=r_data[0], mu=0, rscale="medium", nullInterval=[0.5, float("inf")])
-    results=bf_package.ttestBF(x=r_data[0], mu=0, rscale="medium", nullInterval=[0, float("inf")])
-        
-    # storing the BF in favour of accuracy above chance versus point null
-    bf = np.asarray(r["as.vector"](results))[0]
+    if bf_type == "notch":
 
-    # storing the BF in favour of the accuracy being above chance versus below chance
-    # bf = np.asarray(r["as.vector"](results))[0] / np.asarray(r["as.vector"](results))[1]
+        # computing the notched BF
+        results=bf_package.ttestBF(x=r_data[0], mu=0, rscale="medium", nullInterval=[0.5, float("inf")])
+
+        # storing the BF in favour of the accuracy being above chance versus chance level
+        bf = np.asarray(r["as.vector"](results))[0]
+
+    elif bf_type == "pos_vs_chance":
+        
+        results=bf_package.ttestBF(x=r_data[0], mu=0, rscale="medium", nullInterval=[0, float("inf")])
+        # storing the BF in favour of the accuracy being above chance versus chance level
+        bf = np.asarray(r["as.vector"](results))[0]
+        
+    elif bf_type == "pos_vs_neg":
+        
+        # storing the BF in favour of the accuracy being above chance versus below chance
+        bf = np.asarray(r["as.vector"](results))[0] / np.asarray(r["as.vector"](results))[1]
     
-    # returning the bf
+    # returning the BF
     return bf
 
 
@@ -72,7 +81,6 @@ def bf_testing_time_decod(scores, chance=0.5):
     # looping over timepoints
     for t in range(n_timepoints):
         
-        # results=bf_package.ttestBF(x=r_data[t], mu=0, rscale="medium", nullInterval=[0.5, float("inf")])
         results=bf_package.ttestBF(x=r_data[t], mu=0, rscale="medium", nullInterval=[0, float("inf")])
         bf.append(np.asarray(r["as.vector"](results))[0])
 
@@ -82,7 +90,7 @@ def bf_testing_time_decod(scores, chance=0.5):
 
 
 # defining a function to compute BFs for differences with chance level for a group of GAT matrices
-def bf_testing_gat(scores, chance=0.5, ncores=-1):
+def bf_testing_gat(scores, bf_type="pos_vs_chance", chance=0.5, ncores=-1):
     
     # sanity check
     print("Shape of aggregated scores:", scores.shape)
@@ -109,8 +117,7 @@ def bf_testing_gat(scores, chance=0.5, ncores=-1):
             for j in range(n_timepoints):
 
                 # computing and storing the BF
-                # bf[i, j] = compute_bf(scores-chance, i, j)
-                bf[i, j] = compute_bf(data=scores[:, i, j]-chance)
+                bf[i, j] = compute_bf(data=scores[:, i, j]-chance, bf_type=bf_type)
         
 
     elif ncores > 1: # or if parallel mode
