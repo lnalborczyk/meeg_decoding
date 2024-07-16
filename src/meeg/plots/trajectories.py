@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib import animation
 from matplotlib import cm
 from adjustText import adjust_text
-
+from meeg.latent import stats_trajectories 
 
 def plot_neural_trajectories_2d(
     x_pca, x_pca_std=None, fs=1000, cmap="magma", plot_title="Neural trajectories"
@@ -35,6 +35,71 @@ def plot_neural_trajectories_2d(
     plt.ylabel("PC 2")
     plt.title(plot_title)
     
+    # polishing the layout
+    plt.tight_layout()
+
+    # showing the plot
+    plt.show()
+
+    # returning the figure
+    return fig
+
+
+def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"):
+
+    # computing stats
+    pca_mean, pca_std, speed, curvature = stats_trajectories(epochs=epochs, n_components=n_components)
+
+    # retrieving sampling frequency
+    fs = epochs.info["sfreq"]
+
+    # retrieving x-axis ticks
+    x_ticks = epochs.times
+
+    # defining the grid
+    fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(9, 6))
+
+    # defining the colorbar
+    colormap = cm.get_cmap(cmap)
+    norm = plt.Normalize(vmin = x_ticks.min(), vmax = x_ticks.max() )
+    
+    # making the plot
+    axs[0].plot(pca_mean[:,0], pca_mean[:,1], linestyle = "--", linewidth = 1, color = "black")
+    im0 = axs[0].scatter(pca_mean[:,0], pca_mean[:,1], c = x_ticks, cmap = colormap, norm = norm, alpha = 1, s = 15)
+    axs[0].set_xlabel("PC1", fontsize=10)
+    axs[0].set_ylabel("PC2", fontsize=10)
+    cbar = plt.colorbar(im0, ax=axs[0], fraction=0.046)
+    cbar.set_label("Time (s)")
+
+    # baseline starts
+    baseline_onset = 0
+    print(baseline_onset)
+    axs[0].plot(pca_mean[baseline_onset, 0], pca_mean[baseline_onset, 1], marker = "o", c = "black", markersize=10)
+
+    # stimulus onset
+    stim_onset = int(0.2 / (1 / fs) )
+    print(stim_onset)
+    axs[0].plot(pca_mean[stim_onset, 0], pca_mean[stim_onset, 1], marker = "o", c = "green", markersize=10)
+
+    # maximum speed
+    speed_max = np.argmax(speed)
+    axs[0].plot(pca_mean[speed_max, 0], pca_mean[speed_max, 1], marker = "o", c = "orange", markersize=10)
+
+    # maximum curvature
+    curv_max = np.argmax(curvature)
+    axs[0].plot(pca_mean[curv_max, 0], pca_mean[curv_max, 1], marker = "o", c = "blue", markersize=10)
+
+    print("curv max:", curv_max)
+    print("speed max:", speed_max)
+
+    axs[1].plot(x_ticks, speed, label="speed")
+    axs[1].plot(x_ticks, curvature, label="curvature")
+    axs[1].plot(x_ticks, pca_std, label="traj_sd")
+    axs[1].set_xlabel("Time (s)", fontsize=10)
+    axs[1].set_ylabel("Rescaled Speed/Curvature/SD", fontsize=10)
+    plt.legend()
+    plt.grid(True)
+
     # polishing the layout
     plt.tight_layout()
 

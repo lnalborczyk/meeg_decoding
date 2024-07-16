@@ -4,6 +4,17 @@ from mne.decoding import UnsupervisedSpatialFilter
 from sklearn.decomposition import PCA
 from meeg.decoding import prep_data_for_decoding
 
+def minmax_scale(data):
+    """
+    Rescale the data to between 0 and 1 using minmax scaling.
+    """
+    
+    min_val = np.min(data)
+    max_val = np.max(data)
+    scaled_data = (data — min_val) / (max_val — min_val)
+    
+    return scaled_data
+
 
 def pca_through_time(epochs, n_components=10):
     """
@@ -58,7 +69,7 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
     """
     
     # computing the global pca
-    concatenated_epochs=mne.concatenate_epochs(
+    concatenated_epochs = mne.concatenate_epochs(
         epochs_list=[epochs1, epochs2],
         add_offset=True, on_mismatch="raise", verbose=None
         )
@@ -89,18 +100,22 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
     # returning it
     return x_pca1, x_pca_std1, x_pca2, x_pca_std2
 
-def stats_trajectories(epochs, n_components=10):
+
+def stats_trajectories(epochs, n_components=10, standardise=True):
     """
-    Computing mean, std, speed, and curvature of latent trajectory.
+    Computing mean, SD, speed, and curvature of latent trajectories.
 
     Parameters
     ----------
     epochs: MNE epochs
-        The M/EEG data from which to compute the trajectory.
+        The M/EEG data from which to compute the trajectories.
         Should be a 3-dimensional array/tensor of shape trials x channels x time_steps.
 
     n_components: int
         Number of PCA components to include.
+
+    std_speed_curvature: bool
+        Should we standardise (min-max) the speed and curvature?
     """
     
     # reshaping data
@@ -112,39 +127,48 @@ def stats_trajectories(epochs, n_components=10):
         trials_averaging=False, ntrials=4, shuffling_or_not=True
     )
     
-    # averaging these data across trials
+    # computing the average trajectory
     pca_mean = np.mean(X, axis=0).transpose()
+
+    # computing the variability (SD) of trajectories across trials
     pca_std = np.std(X, axis=0).transpose()
 
-    # computing the derivatives of each dimension (i.e., velocity)
-    x_t = np.gradient(pca_mean[:, 0])
-    y_t = np.gradient(pca_mean[:, 1])
-    z_t = np.gradient(pca_mean[:, 2])
+    # computing the first and second temporal derivatives of the average trajectory
+    rp = np.gradient(pca_mean, axis=0)
+    rpp = np.gradient(rp, axis=0)
 
-    # retrieving velocity for each dimension
-    velocity = np.array([[x_t[i], y_t[i], z_t[i]] for i in range(x_t.size)])
+    # computing the curvature when there is less than 4 PCA components
+    if pca_mean.shape[1] < 4:
+        # solution from https://www.whitman.edu/mathematics/calculus_online/section13.03.html#:~:text=Fortunately%2C%20there%20is%20an%20alternate,′(t)%7C3.
+        # computing the cross product rp x rpp
+        cross_product = np.cross(rp, rpp)
 
-    # computing speed (modulus of the velocity)
-    speed = np.sqrt(x_t * x_t + y_t * y_t + z_t * z_t)
+        # computing the norms
+        norm_rp = np.linalg.norm(rp, axis=1)
+        norm_cross_product = np.linalg.norm(cross_product, axis=1)
 
-    # computing the tangent, we will perform some transformation which will ensure that the size of the speed and velocity is the same.
-    # also, we need to be able to divide the vector-valued velocity function to the scalar speed array.
-    # https://www.delftstack.com/howto/numpy/curvature-formula-numpy/
-    # tangent = np.array([1/speed] * 3).transpose() * velocity
+        # computing the curvature k (for 3 components at most)
+        curvature = norm_cross_product / (norm_rp**3)
 
-    # computing the curvature
-    # ss_t = np.gradient(speed)
-    xx_t = np.gradient(x_t)
-    yy_t = np.gradient(y_t)
-    zz_t = np.gradient(z_t)
-    curvature= np.abs(xx_t * y_t - x_t * yy_t) / (x_t * x_t + y_t * y_t) ** 1.5
+    # else, if there is more than 3 PCA components    
+    else:
 
-    # computing the acceleration
-    # https://stackoverflow.com/questions/28269379/curve-curvature-in-numpy
-    # t_component = np.array([ss_t] * 3).transpose()
-    # n_component = np.array([curvature * speed * speed] * 3).transpose()
-    # acceleration = t_component * tangent + n_component * normal
+        # computing the norms
+        norm_rp = np.linalg.norm(rp, axis=1)
 
-    # returning it
-    return pca_mean, pca_std, speed, curvature
+        # computing the curvature k (for more than 3 components)
+        # here, we use the approximation |r' x r''| / |r'|^3
+        # for higher dimensions, we can compute the norm of the projection of rpp onto the normal plane of rp
+        projection = rpp - (np.sum(rp * rpp, axis=1) / norm_rp**2)[:, np.newaxis] * rp
+        norm_projection = np.linalg.norm(projection, axis=1)
+        curvature = norm_projection / norm_rp**3
+        
 
+    # standardise stats between 0 (min) and 1 (max)
+    if standardise:
+        pca_std = minmax_scale(pca_std)
+        norm_rp = minmax_scale(norm_rp)
+        curvature = minmax_scale(curvature)
+
+    # returning the trajectories and stats
+    return pca_mean, pca_std, norm_rp, curvature
