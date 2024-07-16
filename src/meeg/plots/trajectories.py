@@ -89,14 +89,17 @@ def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"
     curv_max = np.argmax(curvature)
     axs[0].plot(pca_mean[curv_max, 0], pca_mean[curv_max, 1], marker = "o", c = "blue", markersize=10)
 
-    print("curv max:", curv_max)
-    print("speed max:", speed_max)
+    # sanity checks
+    # print("curv max:", curv_max)
+    # print("speed max:", speed_max)
 
+    # plotting the timecourse of speed and curvature
     axs[1].plot(x_ticks, speed, label="speed")
     axs[1].plot(x_ticks, curvature, label="curvature")
-    axs[1].plot(x_ticks, pca_std, label="traj_sd")
+    # axs[1].plot(x_ticks, pca_std[:,0], label="traj_sd")
     axs[1].set_xlabel("Time (s)", fontsize=10)
-    axs[1].set_ylabel("Rescaled Speed/Curvature/SD", fontsize=10)
+    # axs[1].set_ylabel("Rescaled Speed/Curvature/SD", fontsize=10)
+    axs[1].set_ylabel("Rescaled Speed/Curvature", fontsize=10)
     plt.legend()
     plt.grid(True)
 

@@ -7,8 +7,7 @@ from adjustText import adjust_text
 
 # defining a function to plot the decoding results
 def plotting_decoding_scores(
-    decoding_scores, x_ticks, plot_title, end_stim=0.2, plotting_theme="ticks",
-    significant_clusters=None
+    decoding_scores, x_ticks, plot_title, end_stim=0.2, plotting_theme="ticks"
 ):
 
     # reshaping these results in a pandas dataframe
@@ -38,16 +37,6 @@ def plotting_decoding_scores(
         data=results_df, x="time", y="score", ax=ax, lw=2,
         estimator="mean", errorbar=("ci", 95), n_boot=1000, label="Average accuracy"
     )
-    
-    # plotting timepoint significantly better than chance
-    if significant_clusters is not None:
-        
-        for i in range(len(significant_clusters)):
-            # ax.plot(epochs.times[significant_clusters_x[i]], significant_clusters_y, marker="o", color="b", markersize=5)
-            ax.plot(epochs.times[significant_clusters[i]], np.min(np.mean(decoding_scores, axis=0)), marker="o", color="b", markersize=5)
-    
-    # filling accuracy above 0.5
-    # plt.fill_between(x=results_df["time"], y1=0.5, y2=results_df["score"], alpha=0.3, where=results_df["score"]>0.5, interpolate=True)
     
     # specifying axis labels
     ax.set_title(plot_title, size=14, weight=800)

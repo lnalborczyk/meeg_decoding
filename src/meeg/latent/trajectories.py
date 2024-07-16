@@ -11,9 +11,10 @@ def minmax_scale(data):
     
     min_val = np.min(data)
     max_val = np.max(data)
-    scaled_data = (data — min_val) / (max_val — min_val)
-    
-    return scaled_data
+    rescaled_data = (data - min_val) / (max_val - min_val)
+
+    # returning the rescale data
+    return rescaled_data
 
 
 def pca_through_time(epochs, n_components=10):

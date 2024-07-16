@@ -90,7 +90,7 @@ def bf_testing_time_decod(scores, chance=0.5):
 
 
 # defining a function to compute BFs for differences with chance level for a group of GAT matrices
-def bf_testing_gat(scores, bf_type="pos_vs_chance", chance=0.5, ncores=-1):
+def bf_testing_gat(scores, bf_type="pos_vs_chance", n_timepoints=None, chance=0.5, ncores=-1):
     
     # sanity check
     print("Shape of aggregated scores:", scores.shape)
