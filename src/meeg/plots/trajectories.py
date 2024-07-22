@@ -5,10 +5,11 @@ from matplotlib import cm
 from adjustText import adjust_text
 from meeg.latent import stats_trajectories 
 
+
 def plot_neural_trajectories_2d(
     x_pca, x_pca_std=None, fs=1000, cmap="magma", plot_title="Neural trajectories"
     ):
-    
+
     # assigning colours to timepoints
     timepoints = np.arange(x_pca.shape[0]) / (1 / fs)
     colormap = cm.get_cmap(cmap)
@@ -24,7 +25,7 @@ def plot_neural_trajectories_2d(
         x_pca_std_dims_average = np.mean(x_pca_std, axis=1)
         x_norm = (x_pca_std_dims_average - np.min(x_pca_std_dims_average)) / (np.max(x_pca_std_dims_average) - np.min(x_pca_std_dims_average))
         scatter_alpha = 1 - x_norm
-        
+
     # plotting time
     fig = plt.figure(figsize = (12, 9) )
     scatter = plt.scatter(x_pca[:,0], x_pca[:,1], c = timepoints, cmap = colormap, norm = norm, alpha = scatter_alpha, s = 20 * scatter_alpha)
@@ -48,7 +49,7 @@ def plot_neural_trajectories_2d(
 def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"):
 
     # computing stats
-    pca_mean, pca_std, speed, curvature = stats_trajectories(epochs=epochs, n_components=n_components)
+    pca_mean, pca_sd, speed, curvature = stats_trajectories(epochs=epochs, n_components=n_components)
 
     # retrieving sampling frequency
     fs = epochs.info["sfreq"]
@@ -73,12 +74,12 @@ def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"
 
     # baseline starts
     baseline_onset = 0
-    print(baseline_onset)
+    # print(baseline_onset)
     axs[0].plot(pca_mean[baseline_onset, 0], pca_mean[baseline_onset, 1], marker = "o", c = "black", markersize=10)
 
     # stimulus onset
     stim_onset = int(0.2 / (1 / fs) )
-    print(stim_onset)
+    # print(stim_onset)
     axs[0].plot(pca_mean[stim_onset, 0], pca_mean[stim_onset, 1], marker = "o", c = "green", markersize=10)
 
     # maximum speed
@@ -89,17 +90,13 @@ def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"
     curv_max = np.argmax(curvature)
     axs[0].plot(pca_mean[curv_max, 0], pca_mean[curv_max, 1], marker = "o", c = "blue", markersize=10)
 
-    # sanity checks
-    # print("curv max:", curv_max)
-    # print("speed max:", speed_max)
-
     # plotting the timecourse of speed and curvature
     axs[1].plot(x_ticks, speed, label="speed")
     axs[1].plot(x_ticks, curvature, label="curvature")
-    # axs[1].plot(x_ticks, pca_std[:,0], label="traj_sd")
+    axs[1].plot(x_ticks, pca_sd, label="traj_sd")
     axs[1].set_xlabel("Time (s)", fontsize=10)
-    # axs[1].set_ylabel("Rescaled Speed/Curvature/SD", fontsize=10)
-    axs[1].set_ylabel("Rescaled Speed/Curvature", fontsize=10)
+    axs[1].set_ylabel("Rescaled Speed/Curvature/SD", fontsize=10)
+    # axs[1].set_ylabel("Rescaled Speed/Curvature", fontsize=10)
     plt.legend()
     plt.grid(True)
 
@@ -116,7 +113,7 @@ def plot_neural_trajectories_2d_with_stats(epochs, n_components=10, cmap="magma"
 def plot_neural_trajectories_3d(
         x_pca, x_pca_std=None, fs=1000, cmap="magma", plot_title="Neural trajectories"
         ):
-    
+
     # assigning colours to timepoints
     timepoints = np.arange(x_pca.shape[0]) / (1 / fs)
     colormap = cm.get_cmap(cmap)

@@ -1,8 +1,8 @@
 import numpy as np
-import mne
 from mne.decoding import UnsupervisedSpatialFilter
 from sklearn.decomposition import PCA
 from meeg.decoding import prep_data_for_decoding
+
 
 def minmax_scale(data):
     """
@@ -70,11 +70,10 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
     """
     
     # computing the global pca
-    concatenated_epochs = mne.concatenate_epochs(
-        epochs_list=[epochs1, epochs2],
-        add_offset=True, on_mismatch="raise", verbose=None
-        )
-
+    # concatenated_epochs = mne.concatenate_epochs(
+    #     epochs_list=[epochs1, epochs2],
+    #     add_offset=True, on_mismatch="raise", verbose=None
+    #     )
     pca_global = PCA(n_components)
     pca = UnsupervisedSpatialFilter(pca_global, average=False)
 
@@ -82,11 +81,11 @@ def compare_pca_through_time(epochs1, epochs2, n_components=10):
     trials1 = epochs1.get_data()
     trials2 = epochs2.get_data()
 
-    # if needed, cutting data so that both epochs have the same number of trials
-    if trials1.shape[0] == trials2.shape[0]:
-        nb_trials = trials1.shape[0]
-    else:
-        nb_trials = np.min(trials1.shape[0], trials2.shape[0])
+    # sanity check
+    # print("data shapes:", trials1.shape, trials2.shape)
+
+    # getting the minimum number of trials
+    nb_trials = min(trials1.shape[0], trials2.shape[0])
 
     # projecting original data onto a global (common) space
     score1_global = pca.fit_transform(trials1[0:nb_trials, :, :])
@@ -132,8 +131,11 @@ def stats_trajectories(epochs, n_components=10, standardise=True):
     pca_mean = np.mean(X, axis=0).transpose()
 
     # computing the variability (SD) of trajectories across trials
-    pca_std = np.std(X, axis=0).transpose()
+    pca_sd = np.std(X, axis=0).transpose()
 
+    # computing the norm of the SD vector
+    sd_norm = np.linalg.norm(pca_sd, axis=1)
+    
     # computing the first and second temporal derivatives of the average trajectory
     rp = np.gradient(pca_mean, axis=0)
     rpp = np.gradient(rp, axis=0)
@@ -167,9 +169,9 @@ def stats_trajectories(epochs, n_components=10, standardise=True):
 
     # standardise stats between 0 (min) and 1 (max)
     if standardise:
-        pca_std = minmax_scale(pca_std)
+        pca_sd = minmax_scale(sd_norm)
         norm_rp = minmax_scale(norm_rp)
         curvature = minmax_scale(curvature)
 
     # returning the trajectories and stats
-    return pca_mean, pca_std, norm_rp, curvature
+    return pca_mean, pca_sd, norm_rp, curvature
